@@ -11,7 +11,7 @@ head level.  Iconic users hop around excitedly.
 
 No plans to shoot rays and click the terminals, just eye candy for now. Current screenshot:
 
-![Screenshot from 12/30/2016][https://github.com/zettix/frontpage-carousel/blob/master/scripts/assets/frontpage_carousel.png]
+![Screenshot from 12/30/2016](https://github.com/zettix/frontpage-carousel/blob/master/scripts/assets/frontpage_carousel.png)
 
 Suggested Improvements (Not really TODO):
 1 Animate users.  They're supposed to hop around excitedly.

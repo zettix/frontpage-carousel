@@ -55,7 +55,7 @@ function init() {
    camera.lookAt(poi);
 
    // LIGHTS!
-   if (false) // development, look and feel lights.
+   if (false) { // development, look and feel lights.
      var redlight = new THREE.PointLight(0xff0000, 1, 200, 0.3);
      redlight.position.set(-max_diameter * 3 -3, 20, -5);
      scene.add(redlight);

@@ -4,7 +4,8 @@
 // https://www.apache.org/licenses/LICENSE-2.0
 
 var frontpage = frontpage = frontpage || {};
-frontpage.loader = new THREE.OBJMTLLoader();
+frontpage.objloader = new THREE.OBJLoader();
+frontpage.mtlloader = new THREE.MTLLoader();
 
 frontpage.LoadModel = function(model, material, x, y, z, scale_in) {
   this.x = x;
@@ -19,18 +20,19 @@ frontpage.LoadModel = function(model, material, x, y, z, scale_in) {
   this.group.position.z = z;
   var group = this.group;
   var scale = this.scale;
-
-  frontpage.loader.load( "mdl/" + model + ".obj", "mdl/" + material + ".mtl",
-      function(object) {
+  frontpage.mtlloader.load("mdl/" + material + ".mtl", function(matobj) {
+    frontpage.objloader.setMaterials(matobj);
+    frontpage.objloader.load( "mdl/" + model + ".obj", function(object) {
         object.castShadow = true;
         object.receiveShadow = true;
         // Object.positon = relative to group.
         object.scale.x = scale;
         object.scale.y = scale;
         object.scale.z = scale;
-        object.traverse( function( node ) { if ( node instanceof THREE.Mesh ) { node.receiveShadow = true; node.castShadow = true; } } );
+        object.traverse( function( node ) { if ( node instanceof THREE.Mesh ) { node.receiveShadow = true; node.castShadow = true; node.material = matobj.getAsArray()[0]} } );
+        //object.setMaterials(matobj);
         group.add(object);
-     }
-  );
+     });
+   });
   return this;
 }

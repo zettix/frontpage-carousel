@@ -13,6 +13,7 @@
 var container, scene, camera, renderer, controls, stats;
 var clock = new THREE.Clock();
 var cubes;
+var ppl;
 var worldWidth = 256, worldDepth = 256;
 var worldHalfWidth = worldWidth / 2, worldHalfDepth = worldDepth / 2;
 
@@ -20,7 +21,6 @@ init();
 animate();
 
 // I have a couple of these... my frontpages don't exploit namespaces yet.
-var zerovec = new THREE.Vector3(0, 0, 0);
 
 function init() {
     container = document.getElementById('container');
@@ -37,6 +37,8 @@ function init() {
     camera.position.y =  14.0
     camera.position.z =  68;
     poi = new THREE.Vector3(0, -32, 0);
+    camera.lookAt(poi);
+
    } else if (overhead == 1) {
     var whitelight = new THREE.PointLight(0xffffff, 1, 200, 0.3);
     //var greenlight = new THREE.PointLight(0xffffff, 1, 100);
@@ -46,13 +48,16 @@ function init() {
     camera.position.y =  198.0
     camera.position.z =  16;
     poi = new THREE.Vector3(0, -32, 0);
+    camera.lookAt(poi);
    } else if (overhead == 2) {
     camera.position.x =  -max_diameter * 3 + 3;
     camera.position.y =  0;
     camera.position.z =  0;
-    poi = new THREE.Vector3(0, 0, -100);
+    //poi = new THREE.Vector3(0, 0, -100);
+    //camera.lookAt(poi);
+    camera.rotation.y = -0.51806;
    }
-   camera.lookAt(poi);
+   controls = new WASD.Controls(camera);
 
    // LIGHTS!
    if (false) { // development, look and feel lights.
@@ -68,7 +73,7 @@ function init() {
    }
    var spot1 = new THREE.SpotLight(0xffffff);
    spot1.position.set(-200, 100, -10);
-   spot1.target.position.set(zerovec);
+   spot1.target.position.set(globals.zerovec);
    spot1.castShadow = true;
    spot1.shadow.mapSize.width = 1024;
    spot1.shadow.mapSize.height = 1024;
@@ -84,8 +89,8 @@ function init() {
   add_array_to_scene(scene, hexes);
 
   // PEOPLE!
-  var people = MakeCirclePerson(100, 100);
-  add_array_to_scene(scene, people);
+  ppl = people.Populate(60);
+  add_array_to_scene(scene, ppl);
  
   // RENERER!
   renderer = new THREE.WebGLRenderer();
@@ -121,6 +126,8 @@ function animate()  {
   // other animation routines.
   var elapsed = clock.getElapsedTime();
   MoveCubesAround(cubes, elapsed);
+  people.MovePeopleAround();
+  controls.update(clock.getDelta());
 }
 
 function render() {

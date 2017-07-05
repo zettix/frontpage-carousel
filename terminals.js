@@ -10,10 +10,9 @@ function tr(x) {
 
 // Make ring of terminals
 var max_diameter = 20.0;
-var min_diameter = 2.0;
 var step_diameter = 2.0;
 var theta_step;
-var veczero =  new THREE.Vector3(0, 0, 0);
+var lookatme = new THREE.Vector3(0, 0, 0);
 
 var terminalTextures = [
         "Bing_logo_-2016-.svg.png",
@@ -60,7 +59,7 @@ function SetCubePosition(diam, theta, cube) {
   cube.position.x =  tr(ix);
   cube.position.y =  tr(iy);
   cube.position.z =  tr(iz);
-  cube.lookAt(veczero);
+  cube.lookAt(lookatme);
 }
 
 
@@ -106,20 +105,6 @@ function MakeCubeGrid(dimx, dimy, dimz, colorin) {
   return cubes;
 }
 
-function MakeCirclePerson(x, z) {
-      x = 0.4;
-      y = -1;
-      z = -4.1;
-      var cubes = [];
-      for (var i = 0 ; i < 13; i++) {
-        var person = new frontpage.LoadModel("circle_person_point", "circle_person_point", 0, 0, 0, 0.6); // function w/ group.
-        
-        person.group.applyMatrix(new THREE.Matrix4().makeTranslation(tr(x + i * 4 - 19), tr(y),tr(z)));
-        cubes.push([person.group]);
-      }
-      return cubes;
-}
-  
 function MakeHexGrid(dimx, dimy) {
   dimx = 7;
   dimy = 6;

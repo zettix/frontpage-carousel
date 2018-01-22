@@ -62,7 +62,8 @@ people.Populate = function(numPeople) {
 };
 
 
-people.MovePeopleAround = function() {
+people.MovePeopleAround = function(elapsed) {
+  var scaledvelo = this.velocity * elapsed;
   for (var i = 0; i < this.peeps.length; i++) {
     var they = this.peeps[i];
     var pson = they[0];
@@ -71,18 +72,18 @@ people.MovePeopleAround = function() {
     closex *= closex;
     if (closex > this.velocity) {
       if (mood.target[0] > pson.position.x) {
-        pson.position.x += this.velocity;
+        pson.position.x += scaledvelo;
       } else {
-        pson.position.x -= this.velocity;
+        pson.position.x -= scaledvelo;
       }
     }
     var closez = pson.position.z - mood.target[1];
     closez *= closez;
     if (closez > this.velocity) {
       if (mood.target[1] > pson.position.z) {
-        pson.position.z += this.velocity;
+        pson.position.z += scaledvelo;
       } else {
-        pson.position.z -= this.velocity;
+        pson.position.z -= scaledvelo;
       }
     }
     if (closez + closex < this.velocity * 2) {
@@ -98,9 +99,9 @@ people.MovePeopleAround = function() {
       mood.timeout = 40;
       mood.hopheight = 0.0;
     } else {
-      mood.hopheight += mood.hopvel;
+      mood.hopheight += mood.hopvel * elapsed;
       //mood.headheight += mood.headvel * 2.0;
-      mood.hopvel -= this.gravity;
+      mood.hopvel -= this.gravity * elapsed;
       //mood.headvel -= this.gravity * 2.0;
     }
     if (mood.hopheight <= 0.0) {

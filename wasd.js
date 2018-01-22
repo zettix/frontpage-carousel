@@ -25,8 +25,10 @@ WASD.Controls = function(object , domElement) {
    this.lookSpeed = 0.005;
    this.autoForward = false;
    this.activeLook = true;
-   this.velocity = 6000.0;
-   this.rotation_speed = 310.3;
+   //this.velocity = 6000.0;
+   this.velocity = 160.0;
+   //this.rotation_speed = 310.3;
+   this.rotation_speed = 31.3;
   
    // mouse and key states
    this.mouseX = 0;

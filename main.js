@@ -14,6 +14,7 @@ var container, scene, camera, renderer, controls, stats;
 var clock = new THREE.Clock();
 var cubes;
 var ppl;
+var phantoms;
 var worldWidth = 256, worldDepth = 256;
 var worldHalfWidth = worldWidth / 2, worldHalfDepth = worldDepth / 2;
 
@@ -88,6 +89,13 @@ function init() {
   add_array_to_scene(scene, cubes);
   add_array_to_scene(scene, hexes);
 
+  // TRAILS!
+  // ...
+
+  // JETS!
+  phantoms = jets.Populate( 10);
+  add_array_to_scene(scene, phantoms);
+
   // PEOPLE!
   ppl = people.Populate(60);
   add_array_to_scene(scene, ppl);
@@ -124,10 +132,14 @@ function animate()  {
   render();
   // STATS.UPDATE();
   // other animation routines.
-  var elapsed = clock.getElapsedTime();
-  MoveCubesAround(cubes, elapsed);
-  people.MovePeopleAround();
-  controls.update(clock.getDelta());
+  //var elapsed = clock.getElapsedTime();
+  var elapsed = clock.getDelta();
+  elapsed *= 60;
+  MoveCubesAround(cubes, clock.getElapsedTime());
+  people.MovePeopleAround(elapsed);
+  jets.FlyJetsAround(scene, elapsed);
+  trails.AnimateTrails(scene, elapsed);
+  controls.update(elapsed / 500);
 }
 
 function render() {

@@ -12,7 +12,7 @@ var trails = {};
 trails.foos = {};
 trails.avail = [];
 trails.lifeparam = 400.0;
-trails.serial = 0;
+trails.serial = 0.0;
 trails.max = 1000;
 
 trails.NewMood = function() {
@@ -30,13 +30,10 @@ trails.Killall = function() {
 trails.Add = function(pos, dir, scene) {
  var thing = {};
  var mod = {};
- var theta = 62830.0 * this.serial;
- var intga = Math.floor(theta * 0.1592);
- var gaga = theta - (6.28 * intga);
- gaga *= 0.010;
- var red = Math.sin(gaga);
- var green = Math.sin(gaga + 2.09);
- var blue = Math.sin(gaga + 4.19);
+ var theta = 0.0001 * this.serial;
+ var red = Math.cos(theta);
+ var green = Math.cos(theta + 2.09);
+ var blue = Math.cos(theta + 4.19);
  red *= red;
  green *= green;
  blue *= blue;
@@ -64,8 +61,8 @@ trails.Add = function(pos, dir, scene) {
    mod.name = "S" + this.serial;
    //mod.add(cube);
    scene.add(mod);
-   this.serial += 1;
  }
+  this.serial += 1.0;
  // mod.children[0].material.setValues({color: col});
  mod.material.setValues({color: col});
  mod.position.x = pos.x;
